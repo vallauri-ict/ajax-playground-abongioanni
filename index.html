@@ -1,0 +1,124 @@
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <script src="jQuery.js" type="application/javascript"></script>
+    <script src="index.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="icon" href="img/randomuser.png" type="image/icon type">
+    <title>Random User Generator | Home</title>
+</head>
+<body id="wrapper">
+    <header>
+        <h1>Random User Generator</h1>
+        <p>A free, <a target="_blank" id="openSource" href="https://github.com/RandomAPI/Randomuser.me-Node">open-source</a>
+            API for generating random user data. Like Lorem Ipsum, but for people. </p>
+        <a href="https://www.instagram.com/_oioai/?hl=it" target="_blank" class="twitter">
+            <img src="img/Instagram.png" alt="">Follow me @_oioai</a>
+    </header>
+    <section class="card_offset">
+        <div class="card">
+            <div id="wait">
+                <div id="loader"></div>
+                <span>
+                    Complete the fields below and find your Random users!
+                </span>
+                <img src="img/source.gif"  alt="">
+            </div>
+            <div class="details">
+                <div class="avanti"></div>
+                <div class="indietro"></div>
+                <div class="user_photo horizontal_center" id="user_photo">
+                    <a href="javascript:getUser(strCheckValue())" class="refresh">New</a>
+                    <img alt="" id="picture" src="">
+                </div>
+                <p id="user_title">Hi, My name is</p>
+                <p id="user_value"></p>
+            </div>
+            <ul class="values_list horizontal_center" id="values_list">
+                <li data-title="Hi, My name is" data-value="" data-label="name" class="active"></li>
+                <li data-title="My email address is" data-value="" data-label="email" data-caps="false"></li>
+                <li data-title="My birthday is" data-value="" data-label="birthday"></li>
+                <li data-title="My address is" data-value="" data-label="location"></li>
+                <li data-title="My phone number is" data-value="" data-label="phone"></li>
+                <li data-title="My password is" data-value="" data-label="pass"></li>
+            </ul>
+            <p id="partial" style="position: relative;left:45%;bottom: 10%;width: 10%;height: 30px;font-weight: 400"></p>
+
+        </div>
+
+    </section>
+    <footer class="card" style="margin-bottom: 200px">
+        <label style="font-family: Ubuntu, sans-serif;font-weight: 500" for="slider">NUMBER OF RESULTS:</label><br>
+        <input type="range" min="1" max="20" value="1" id="slider"><br>
+        <span class="number">1</span>
+        <br><br><br><br>
+        <label class="lbl">Gender:</label><br>
+        <label>
+            <input type="radio" name="gender" value="gender=male" >Male
+        </label>
+        <label>
+            <input type="radio" name="gender" value="gender=female" >Female
+        </label>
+        <label>
+            <input type="radio" name="gender" value="" checked>Not Specified
+        </label>
+        <br><br>
+        <label class="lbl">Nations:</label><br>
+        <label>
+            US
+            <input type="checkbox" value="US" checked>
+        </label>
+        <label>
+            GB
+            <input type="checkbox" value="GB" checked>
+        </label>
+        <label>
+            DE
+            <input type="checkbox" value="DE" checked>
+        </label>
+        <label>
+            IR
+            <input type="checkbox" value="IR">
+        </label>
+        <label>
+            BR
+            <input type="checkbox" value="BR">
+        </label>
+        <br><br>
+        <fieldset>
+            <legend>Password</legend>
+            <label class="lbl">Upper/Lower case:<br></label>
+            <label>
+                <input type="radio" name="pwd1" value="upper">
+                Upper case
+            </label><br>
+            <label>
+                <input type="radio" name="pwd1" value="lower">
+                Lower case
+            </label><br>
+            <label>
+                <input type="radio" name="pwd1" value="" checked>
+                All
+            </label>
+            <hr>
+            <label class="lbl">Special/Numeric characters:<br></label>
+            <label>
+                <input type="radio" name="pwd2" value="special">
+                Special character
+            </label><br>
+            <label>
+                <input type="radio" name="pwd2" value="number">
+                Numberic
+            </label><br>
+            <label>
+                <input type="radio" name="pwd2" value="" checked>
+                All
+            </label>
+            <br>
+        </fieldset>
+        <br>
+        <a href="javascript:getUser(strCheckValue())" class="new">New</a>
+    </footer>
+</body>
+</html>

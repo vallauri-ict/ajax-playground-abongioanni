@@ -17,7 +17,7 @@ $(document).ready(function () {
                 "value": banca["cBanca"],
                 "text": banca["nome"],
                 appendTo: _lstBanche
-            })
+            });
         _lstBanche.prop("selectedIndex", -1);
     });
 

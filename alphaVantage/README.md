@@ -18,4 +18,4 @@ Selezionandone uno verranno caricati nella tabella sottostante i relativi campi.
 
 Il campo di destra si occupa invece di svolgere una ricerca incrementale e caricare i primi 5 risultati nella tabella.
 ## ATTENZIONE! 
-C'è un limite a 5 richieste alle API al minuto o 500 al giorno dovuto all'account basilare di Alpha Vantage
+C'è un limite a 5 richieste alle API al minuto o 500 al giorno dovuto all'account basilare di Alpha Vantage. Per questo il trigger iniziale della combo è bloccato.

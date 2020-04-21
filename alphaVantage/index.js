@@ -4,18 +4,19 @@ const apiKey = "UJGWAY47OK4QKSZ0";
 
 $(document).ready(function () {
     let _table = $("#tblResults tbody");
+
     //EVENT COMBO CHANGE
     let _cmb = $("#cmbSymbols").on("change", function () {
-        let request = inviaRichiesta("GET", "http://localhost:3000/GLOBAL_QUOTES?symbol=" + $(this).val() /*+ "&apikey=" + apiKey*/);
-        request.done(function (data) {
+        let default_ = inviaRichiesta("GET", "http://localhost:3000/GLOBAL_QUOTE?symbol=" + $(this).val() /*+ "&apikey=" + apiKey*/);
+        default_.done(function (data) {
             $(_table).html("").append(createRow(data[0]["Global Quote"]));
-            console.log(data);
         });
-        request.fail(error);
+        default_.fail(error);
     });
+
     //CARICAMENTO COMBO
-    let companiesR = inviaRichiesta("GET", "http://localhost:3000/companies");
-    companiesR.done(function (data) {
+    let defaultCompanies_ = inviaRichiesta("GET", "http://localhost:3000/companies");
+    defaultCompanies_.done(function (data) {
         for (let i = 0; i < data.length; i++) {
             $("<option>", {
                 text: data[i]["desc"],
@@ -25,38 +26,40 @@ $(document).ready(function () {
         }
         $(_cmb).trigger("change");
     });
-    companiesR.fail(error);
+    defaultCompanies_.fail(error);
+
     //RICERCA INCREMENTALE
-    let _txtSearch = $("#txtSearch").on("keyup", function () {
+    $("#txtSearch").on("keyup", function () {
         if ($(this).val().length >= 2) {
-            let request = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
-            request.done(function (data) {
+            let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
+            search_.done(function (data) {
                 $(_table).html("");
                 try {
                     for (let i = 0; i < 5; i++) {
-                        let r = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey);
-                        r.done(function (data) {
+                        let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey);
+                        globalQuotes_.done(function (data) {
                             $(_table).append(createRow(data["Global Quote"]));
                             if ("Note" in data) {
                                 i = 5;
                                 throw "Limite richieste al server raggiunto\n" + data["Note"];
                             }
                         });
-                        r.fail(error);
+                        globalQuotes_.fail(error);
                     }
                 } catch (ee) {
-
+                    alert(ee);
                 }
             });
-            request.fail(error);
+            search_.fail(error);
         }
     });
+
     //GRAFICO
-    let r = inviaRichiesta("GET", "http://localhost:3000/chart");
-    r.done(function (data) {
+    let dataChart_ = inviaRichiesta("GET", "http://localhost:3000/chart");
+    dataChart_.done(function (data) {
         let chart=data;
-        let chartReq = inviaRichiesta("GET", "http://localhost:3000/3year");
-        chartReq.done(function (data) {
+        let dataToShow_ = inviaRichiesta("GET", "http://localhost:3000/3year");
+        dataToShow_.done(function (data) {
             for (let key in data) {
                 let d=chart["data"];
                 d["labels"].push(key);
@@ -66,11 +69,14 @@ $(document).ready(function () {
                 dataset["backgroundColor"].push(color);
                 dataset["borderColor"].push(color);
             }
-            console.log(chart);
-            var myBarChart = new Chart($("#myChart"), chart);
+            new Chart($("#myChart"), chart);
+            
         });
+        dataToShow_.fail(error);
     });
-    r.fail(error);
+    dataChart_.fail(error);
+
+
     //FUNCTIONS
     function createRow(data) {
         let _tr = $("<tr>");

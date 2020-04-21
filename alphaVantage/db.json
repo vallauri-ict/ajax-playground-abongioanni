@@ -21,45 +21,10 @@
             "desc": "IBM"
         }
     ],
-    "3year": {
-        "Information Technology": "63.49%",
-        "Health Care": "24.29%",
-        "Consumer Discretionary": "16.82%",
-        "Utilities": "8.05%",
-        "Consumer Staples": "5.33%",
-        "Real Estate": "-0.16%",
-        "Industrials": "-8.72%",
-        "Communication Services": "-8.75%",
-        "Financials": "-10.16%",
-        "Materials": "-12.21%",
-        "Energy": "-53.19%"
-    },
-    "chart": {
-        "type": "doughnut",
-        "data": {
-            "labels": [],
-            "datasets": [{
-                "data": [],
-                "backgroundColor": [],
-                "borderColor": [],
-                "borderWidth": 1
-            }]
-        
-        },
-        "options": {
-            "scales": {
-                "yAxes": [{
-                    "ticks": {
-                        "beginAtZero": true
-                    }
-                }]
-            }
-        }
-    },
-    "GLOBAL_QUOTES":[
+    "GLOBAL_QUOTE": [
         {
             "symbol": "IBM",
-            "Global Quote":{
+            "Global Quote": {
                 "01. symbol": "IBM",
                 "02. open": 119.1500,
                 "03. high": 122.8635,
@@ -74,7 +39,7 @@
         },
         {
             "symbol": "MSFT",
-            "Global Quote":{
+            "Global Quote": {
                 "01. symbol": "MSFT",
                 "02. open": 176.6300,
                 "03. high": 178.7500,
@@ -89,7 +54,7 @@
         },
         {
             "symbol": "BABA",
-            "Global Quote":{
+            "Global Quote": {
                 "01. symbol": "BABA",
                 "02. open": 209.8700,
                 "03. high": 216.1000,
@@ -99,12 +64,12 @@
                 "07. latest trading day": "2020-04-20",
                 "08. previous close": 209.5000,
                 "09. change": 2.6300,
-                "10. change percent": "1.2554%"                
+                "10. change percent": "1.2554%"
             }
         },
         {
             "symbol": "XIACF",
-            "Global Quote":{
+            "Global Quote": {
                 "01. symbol": "XIACF",
                 "02. open": 1.3500,
                 "03. high": 1.3500,
@@ -114,12 +79,12 @@
                 "07. latest trading day": "2020-04-20",
                 "08. previous close": 1.3300,
                 "09. change": -0.0116,
-                "10. change percent": "-0.8722%"         
+                "10. change percent": "-0.8722%"
             }
         },
         {
             "symbol": "SNE",
-            "Global Quote":{
+            "Global Quote": {
                 "01. symbol": "SNE",
                 "02. open": 63.5900,
                 "03. high": 64.4300,
@@ -132,6 +97,46 @@
                 "10. change percent": "-1.3811%"
             }
         }
-    ]
-
+    ],
+    "3year": {
+        "Information Technology": "63.49%",
+        "Health Care": "24.29%",
+        "Consumer Discretionary": "16.82%",
+        "Utilities": "8.05%",
+        "Consumer Staples": "5.33%",
+        "Real Estate": "-0.16%",
+        "Industrials": "-8.72%",
+        "Communication Services": "-8.75%",
+        "Financials": "-10.16%",
+        "Materials": "-12.21%",
+        "Energy": "-53.19%"
+    },
+    "chart": {
+        "type": "bar",
+        "data": {
+            "labels": [],
+            "datasets": [
+                {
+                    "data": [],
+                    "backgroundColor": [],
+                    "borderColor": [],
+                    "borderWidth": 1
+                }
+            ]
+        },
+        "options": {
+            "scales": {
+                "yAxes": [
+                    {
+                        "ticks": {
+                            "beginAtZero": true
+                        }
+                    }
+                ]
+            },
+            "legend": {
+                "display": false
+            }
+        }
+    }
 }

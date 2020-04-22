@@ -1,7 +1,7 @@
 # Alpha Vantage (ajax - playground)
 Questo semplice programma è composto dalla seguente interfaccia:
 
-![alt text](https://github.com/vallauri-ict/ajax-playground-abongioanni/blob/master/alphaVantage/Cattura.PNG)
+![alt text](https://github.com/vallauri-ict/ajax-playground-abongioanni/blob/master/alphaVantage/resources/Cattura.PNG)
 
 Nella combo a sinistra ci sono alcuni brand già registrati da un JSON con associazione "symbol":"nome azienda":
 ```JavaScript

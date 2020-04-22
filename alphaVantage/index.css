@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
+@font-face {
+    font-family: Dense;
+    src: url("resources/Dense-Regular.otf");
+    font-weight: normal;
+}
+* {
+    margin: 0 ;
+    padding: 0 ;
+}
+body,html{
+    position: relative;
+    overflow-x: hidden;
+}
+.container-fluid{
+    margin:0 !important;
+    padding:0 !important;
+}
+html,body,.container-fluid{
+    background-color: #1e1d22;
+    color:#fffff0;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+html{
+    -ms-overflow-style: none;
+}
+.header-image{
+    background-image: url("resources/40840.jpg");
+    height:85%;
+    background-position: center;
+    background-size: cover;
+}
+.main{
+    padding-top: 100px;
+    z-index: -1;
+    background: #2f2e33;
+}
+
+/*************************NAVBAR**************************/
+.responsive-menu{
+    display: none;
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:6;
+}
+.responsive-navbar {
+    margin-bottom:2%;
+    width: 100%;
+    background: #1e1d22;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+    z-index: 1;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.sticky + .main {
+    padding-top: 60px;
+  }
+.icon,
+.close-btn {
+    display: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color:#fffff0;
+}
+.links {
+    display: flex;
+    list-style: none;
+    margin:0!important;
+}
+.links li {
+    margin-right: 24px;
+}
+.links li a {
+    text-decoration: none;
+    color: #999;
+    letter-spacing: -0.5px;
+    transition: all 0.125s;
+}
+.links li a:hover {
+    color: #fffff0;
+}
+.logo{
+    font-family: Dense;
+    color:#fffff0;
+    margin:0!important;
+    font-size: 3em;
+}
+.backdrop {
+    display: none;
+    animation: 0.4s ease-in-out fadeIn forwards;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0);
+    transition:all 0.4s;
+    cursor: pointer;
+    height:100%;
+}
+@keyframes fadeIn {
+    to {
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Mobile view */
+@media (max-width: 675px) {
+    .icon,
+    .close-btn {
+        display: block;
+    }
+    .icon {
+        position: absolute;
+        right: 24px;
+    }
+    .links {
+        display: none;
+        position: fixed;
+        opacity: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        left:0;
+        background: #fffff0;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        transition: all 0.125s;
+    }
+    .links li {
+        margin-right: 0;
+        margin:30px;
+        font-size: 1.5em;
+    }
+    .close-btn {
+        position: fixed;
+        top: 24px;
+        right: -90vh;
+        color: #1e1d22;
+        z-index: 3;
+        transition:all 0.3s;
+    }
+    .close-btn:hover {
+        color: #000;
+        cursor: pointer;
+    }
+    .open .links li:hover{
+        background-color: #eeeeee;
+        margin:0 30px ;
+    }
+
+    /* Open class */
+    .open .links li:first-of-type{
+        margin-top: 50%;
+    }
+    .open .links li a{
+        color:#1e1d22
+    }
+    .open{
+        display: block;
+    }
+    .open .links{
+        z-index: 3;
+        display: inline-block;
+    }
+    .open .close-btn {
+        right: 26px;
+        top:29px;
+        z-index: 4;
+    }
+    .open .backdrop {
+        display: block;
+        z-index: 2;
+    }
+}
+/************************************************/
+.intestazione{
+    font-family: Dense;
+    text-align: center;
+    color: #fffff0;
+}
+.simple-text{
+    margin-bottom: 10px;
+    font-family: Dense;
+    font-size: 20pt;
+}
+table{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+table tr td{
+    border-top: none !important;
+    text-align: center;
+}
+table tbody tr{
+    transition:all 0.125s;
+}
+table tbody tr:hover {
+    background-color: #444;
+}
+footer{
+    width:100%;
+    text-align: center;
+    position: absolute;
+    bottom:10px;
+    font-size: 5pt;
+}
+.chart-wrapper{
+    margin-bottom:5%
+}
+.options{
+    margin:10px 15px;
+}
+@media screen and (max-width: 600px) {
+    .search-wrapper{
+        border-left: none;
+    }
+}

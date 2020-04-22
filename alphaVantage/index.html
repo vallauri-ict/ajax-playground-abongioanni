@@ -1,128 +1,107 @@
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>AlphaVantage - Ajax exercise</title>
-	<link rel="icon" href="alpha.png">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="icon" href="resources/alpha.png">
+	<link rel="stylesheet" type="text/css"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
+		integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="index.js"></script>
-    <style>
-		@font-face {
-			font-family: Dense;
-			src: url("Dense-Regular.otf");
-			font-weight: normal;
-		}
-		.html,body,.container-fluid{
-			background-color: #222;
-			color:#fffff0;
-		}
-        .intestazione{
-            font-family: Dense;
-			text-align: center;
-			font-size: 6em;
-			color: #fffff0;
-        }
-		.simple-text{
-			margin-bottom: 10px;
-			font-family: Dense;
-			font-size: 20pt;
-		}
-		table{
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		}
-		table tr td{
-			border-top: none !important;
-			text-align: center;
-		}
-		table tbody tr{
-			transition:all 0.125s;
-		}
-		table tbody tr:hover {
-			background-color: #444;
-		}
-		footer{
-			width:100%;
-			text-align: center;
-			position: absolute;
-			bottom:10px;
-			font-size: 5pt;
-		}
-		.chart-wrapper{
-			margin-bottom:5%
-		}
-		.search-wrapper{
-			border-left: 3px solid #fffff0;
-		}
-		@media screen and (max-width: 600px) {
-			.search-wrapper{
-				border-left: none;
-			}
-		}
-    </style>
+
+	<style>
+
+	</style>
 </head>
 
 <body>
-<div class="container-fluid row">
-	<div class="col-sm-1"></div>
-	<div class="col-sm-10 intestazione">Alpha Vantage</div>
-	<div class="col-sm-1"></div>
+	<div class="container-fluid">
+		<section class="header-image row"></section><!--heightlighted menu-->
 
-	<div class="col-sm-2"></div>
-	<div class="col-sm-8 row" style="margin-bottom: 10px">
-		<div class="col-sm-1"></div>
-		<div class="col-sm-5">
-			<div class="text-center simple-text" >
-				<span>Select a brand</span>
+		<nav class="responsive-navbar">
+			<h3 class="logo">Alpha Vantage</h3>
+			<div class="icon"><i class="fas fa-bars"></i></div>
+			<div class="links-wrapper active">
+				<ul class="links">
+					<li><a href="">Home</a></li>
+					<li><a href="#tblResults">Results</a></li>
+					<li><a href="#myChart">Chart</a></li>
+				</ul>
 			</div>
-			<div class="input-group " >
-				<select class="form-control" id="cmbSymbols">
+		</nav><!--main menu-->
 
-				</select>
-			</div>
-		</div>
-		<div class="col-sm-5 search-wrapper">
-			<div class="text-center simple-text"  >
-				<span>Search</span>
-			</div>
+		<div class="responsive-menu">
+			<div class="backdrop"></div>
+			<div class="close-btn"><i class="fas fa-times"></i></div>
+			<ul id="menuNavbar" class="links">
 
-			<div class="input-group" style="margin-bottom: 20px">
-				<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-2"></div>
+			</ul>
+		</div><!--responsive menu-->
 
-	<div class="col-sm-1"></div>
-	<div class="table-responsive col-sm-10">
-		<table  id="tblResults" class="table" style="color:#fffff0">
-			<thead class="bg-dark">
-				<tr>
-					<td>Symbol</td>
-					<td>Open</td>
-					<td>High</td>
-					<td>Low</td>
-					<td>Price</td>
-					<td>Volume</td>
-					<td>Latest trading day</td>
-					<td>Previous close</td>
-					<td>Change</td>
-					<td>Change percent</td>
-				</tr>
-			</thead>
-			<tbody>
-	
-			</tbody>
-		</table>
-	</div>
+		<section class="main"><!--main section-->
+			<div class="row options" style="margin-bottom: 10px">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+					<div class="text-center simple-text">
+						<span>Select a brand</span>
+					</div>
+					<div class="input-group ">
+						<select class="form-control" id="cmbSymbols">
 
-	<div class="col-sm-2"></div>
-	<div class="chart-wrapper col-sm-8">
-		<canvas id="myChart"></canvas>
-	</div>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-4 search-wrapper">
+					<div class="text-center simple-text">
+						<span>Search</span>
+					</div>
+
+					<div class="input-group" style="margin-bottom: 20px">
+						<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
+					</div>
+				</div>
+			</div><!--search or choose-->
+
+			<div class="row justify-content-center">
+				<div class="col-auto">
+					<table id="tblResults" class="table table-responsive" style="color:#fffff0">
+						<thead class="bg-dark">
+							<tr>
+								<td>Symbol</td>
+								<td>Open</td>
+								<td>High</td>
+								<td>Low</td>
+								<td>Price</td>
+								<td>Volume</td>
+								<td>Latest trading day</td>
+								<td>Previous close</td>
+								<td>Change</td>
+								<td>Change percent</td>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div><!--table-->
+
+			<div class="row justify-content-center" style="padding-top: 100px;">
+				<div class="chart-wrapper col-sm-10">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div><!--chart-->
+		</section>
+
+
 </body>
+
 </html>

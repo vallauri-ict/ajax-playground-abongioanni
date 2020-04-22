@@ -4,11 +4,56 @@ const apiKey = "UJGWAY47OK4QKSZ0";
 
 $(document).ready(function () {
     let _table = $("#tblResults tbody");
+    let _openIcon = $('.icon');
+    let _linksList = $('.links-wrapper ul li');
+    let _backdrop = $('.backdrop');
+    let _closeIcon = $('.close-btn');
+    let _responsiveLinks = $("#menuNavbar");
+    let _navbar = document.getElementsByClassName("responsive-navbar")[0];
+
+    //STICKY NAVBAR
+    var sticky = _navbar.offsetTop;
+    $(document).on("scroll", ()=> {
+        if (window.pageYOffset >= sticky) {
+            $(_navbar).addClass("sticky");
+        } else {
+            $(_navbar).removeClass("sticky");
+        }
+    });
+
+    //LINKS UPDATE
+    $(_responsiveLinks).children().remove()
+    for (let i=0;i< _linksList.length;i++) {
+        let _a = $(_linksList).eq(i).find("a");
+        $("<li>", {
+            appendTo: _responsiveLinks,
+            append: [
+                $("<a>", {
+                    href: $(_a).prop("href"),
+                    text: $(_a).text()
+                }).on("click",()=>{
+                    $(_responsiveLinks).parent().removeClass("open")
+                })
+            ]
+        });
+    }
+
+    //RESPONSIVE NAVBAR
+    $(_openIcon).on('click', () => {
+        $(_responsiveLinks).parent().addClass("open")
+        $(_responsiveLinks).animate({opacity: 1},125);
+    });
+    $(_closeIcon).on('click', () => {
+        $(_responsiveLinks).animate({opacity: 0},125,()=>{$(_responsiveLinks).parent().removeClass("open")});
+    });
+    $(_backdrop).on('click', () => {
+        $(_responsiveLinks).animate({opacity: 0},125,()=>{$(_responsiveLinks).parent().removeClass("open")});
+    });
 
     //EVENT COMBO CHANGE
-    let _cmb = $("#cmbSymbols").on("change", function () {
+    let _cmb = $("#cmbSymbols").on("change", function() {
         let default_ = inviaRichiesta("GET", "http://localhost:3000/GLOBAL_QUOTE?symbol=" + $(this).val() /*+ "&apikey=" + apiKey*/);
-        default_.done(function (data) {
+        default_.done (function(data) {
             $(_table).html("").append(createRow(data[0]["Global Quote"]));
         });
         default_.fail(error);
@@ -16,7 +61,7 @@ $(document).ready(function () {
 
     //CARICAMENTO COMBO
     let defaultCompanies_ = inviaRichiesta("GET", "http://localhost:3000/companies");
-    defaultCompanies_.done(function (data) {
+    defaultCompanies_.done( function(data) {
         for (let i = 0; i < data.length; i++) {
             $("<option>", {
                 text: data[i]["desc"],
@@ -29,15 +74,15 @@ $(document).ready(function () {
     defaultCompanies_.fail(error);
 
     //RICERCA INCREMENTALE
-    $("#txtSearch").on("keyup", function () {
+    $("#txtSearch").on("keyup", () =>{
         if ($(this).val().length >= 2) {
             let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
-            search_.done(function (data) {
+            search_.done( function(data) {
                 $(_table).html("");
                 try {
                     for (let i = 0; i < 5; i++) {
                         let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey);
-                        globalQuotes_.done(function (data) {
+                        globalQuotes_.done( function(data) {
                             $(_table).append(createRow(data["Global Quote"]));
                             if ("Note" in data) {
                                 i = 5;
@@ -56,21 +101,21 @@ $(document).ready(function () {
 
     //GRAFICO
     let dataChart_ = inviaRichiesta("GET", "http://localhost:3000/chart");
-    dataChart_.done(function (data) {
-        let chart=data;
+    dataChart_.done( function(data) {
+        let chart = data;
         let dataToShow_ = inviaRichiesta("GET", "http://localhost:3000/3year");
-        dataToShow_.done(function (data) {
+        dataToShow_.done(function(data){ 
             for (let key in data) {
-                let d=chart["data"];
+                let d = chart["data"];
                 d["labels"].push(key);
-                let dataset=d["datasets"][0];
-                dataset["data"].push(data[key].replace("%",""));
-                let color="rgba("+Random(0,255)+", "+Random(0,255)+", "+Random(0,255)+", 1)";
+                let dataset = d["datasets"][0];
+                dataset["data"].push(data[key].replace("%", ""));
+                let color = "rgba(" + Random(0, 255) + ", " + Random(0, 255) + ", " + Random(0, 255) + ", 1)";
                 dataset["backgroundColor"].push(color);
                 dataset["borderColor"].push(color);
             }
             new Chart($("#myChart"), chart);
-            
+
         });
         dataToShow_.fail(error);
     });

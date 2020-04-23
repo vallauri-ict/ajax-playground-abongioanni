@@ -24,7 +24,7 @@
 
 <body>
 	<div class="container-fluid">
-		<section class="header-image row"></section><!--heightlighted menu-->
+		<div class="header-image row"></div><!--heightlighted menu-->
 
 		<nav class="responsive-navbar">
 			<h3 class="logo">Alpha Vantage</h3>
@@ -32,8 +32,8 @@
 			<div class="links-wrapper active">
 				<ul class="links">
 					<li><a href="">Home</a></li>
-					<li><a href="#tblResults">Results</a></li>
-					<li><a href="#myChart">Chart</a></li>
+					<li><a href="#Results">Results</a></li>
+					<li><a href="#Chart">Chart</a></li>
 				</ul>
 			</div>
 		</nav><!--main menu-->
@@ -46,8 +46,9 @@
 			</ul>
 		</div><!--responsive menu-->
 
-		<section class="main"><!--main section-->
-			<div class="row options" style="margin-bottom: 10px">
+		<div id="Results" class="main"><!--main section-->
+			<section  class="row options section" style="margin-bottom: 10px;">
+				<div class="col-sm-12 intestazione" style="font-size: 4em;">Choose or search?</div>
 				<div class="col-sm-2"></div>
 				<div class="col-sm-4">
 					<div class="text-center simple-text">
@@ -68,9 +69,9 @@
 						<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
 					</div>
 				</div>
-			</div><!--search or choose-->
+			</section><!--search or choose-->
 
-			<div class="row justify-content-center">
+			<section class="row justify-content-center section">
 				<div class="col-auto">
 					<table id="tblResults" class="table table-responsive" style="color:#fffff0">
 						<thead class="bg-dark">
@@ -87,19 +88,30 @@
 								<td>Change percent</td>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="Chart">
 
 						</tbody>
 					</table>
 				</div>
-			</div><!--table-->
+			</section><!--table-->
 
-			<div class="row justify-content-center" style="padding-top: 100px;">
+			<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 10%;">Chart</div>
+			<section  class="row justify-content-center section">
+				<div class="col-sm-6">
+					<div class="text-center simple-text">
+						<span>Select a brand</span>
+					</div>
+					<div class="input-group ">
+						<select class="form-control" id="cmbSector">
+
+						</select>
+					</div>
+				</div>
 				<div class="chart-wrapper col-sm-10">
 					<canvas id="myChart"></canvas>
 				</div>
-			</div><!--chart-->
-		</section>
+			</section><!--chart-->
+		</div>
 
 
 </body>

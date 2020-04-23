@@ -87,7 +87,10 @@ html{
     text-decoration: none;
     color: #999;
     letter-spacing: -0.5px;
-    transition: all 0.125s;
+    transition: all 0.25s;
+}
+.links li a.active {
+	color: #f00;
 }
 .links li a:hover {
     color: #fffff0;

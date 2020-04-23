@@ -4,6 +4,7 @@ const apiKey = "UJGWAY47OK4QKSZ0";
 
 $(document).ready(function () {
     let _table = $("#tblResults tbody");
+
     let _openIcon = $('.icon');
     let _linksList = $('.links-wrapper ul li');
     let _backdrop = $('.backdrop');
@@ -11,9 +12,11 @@ $(document).ready(function () {
     let _responsiveLinks = $("#menuNavbar");
     let _navbar = document.getElementsByClassName("responsive-navbar")[0];
 
+    let c ;//chart is empty
+
     //STICKY NAVBAR
     var sticky = _navbar.offsetTop;
-    $(document).on("scroll", ()=> {
+    $(document).on("scroll", () => {
         if (window.pageYOffset >= sticky) {
             $(_navbar).addClass("sticky");
         } else {
@@ -23,7 +26,7 @@ $(document).ready(function () {
 
     //LINKS UPDATE
     $(_responsiveLinks).children().remove()
-    for (let i=0;i< _linksList.length;i++) {
+    for (let i = 0; i < _linksList.length; i++) {
         let _a = $(_linksList).eq(i).find("a");
         $("<li>", {
             appendTo: _responsiveLinks,
@@ -31,7 +34,7 @@ $(document).ready(function () {
                 $("<a>", {
                     href: $(_a).prop("href"),
                     text: $(_a).text()
-                }).on("click",()=>{
+                }).on("click", () => {
                     $(_responsiveLinks).parent().removeClass("open")
                 })
             ]
@@ -41,48 +44,75 @@ $(document).ready(function () {
     //RESPONSIVE NAVBAR
     $(_openIcon).on('click', () => {
         $(_responsiveLinks).parent().addClass("open")
-        $(_responsiveLinks).animate({opacity: 1},125);
+        $(_responsiveLinks).animate({ opacity: 1 }, 125);
     });
     $(_closeIcon).on('click', () => {
-        $(_responsiveLinks).animate({opacity: 0},125,()=>{$(_responsiveLinks).parent().removeClass("open")});
+        $(_responsiveLinks).animate({ opacity: 0 }, 125, () => { $(_responsiveLinks).parent().removeClass("open") });
     });
     $(_backdrop).on('click', () => {
-        $(_responsiveLinks).animate({opacity: 0},125,()=>{$(_responsiveLinks).parent().removeClass("open")});
+        $(_responsiveLinks).animate({ opacity: 0 }, 125, () => { $(_responsiveLinks).parent().removeClass("open") });
     });
 
-    //EVENT COMBO CHANGE
-    let _cmb = $("#cmbSymbols").on("change", function() {
+    //EVENT COMBO COMPANIES CHANGE
+    let _cmbCompanies = $("#cmbSymbols").on("change", function () {
         let default_ = inviaRichiesta("GET", "http://localhost:3000/GLOBAL_QUOTE?symbol=" + $(this).val() /*+ "&apikey=" + apiKey*/);
-        default_.done (function(data) {
+        default_.done(function (data) {
             $(_table).html("").append(createRow(data[0]["Global Quote"]));
         });
         default_.fail(error);
     });
 
-    //CARICAMENTO COMBO
+    //EVENT COMBO SECTOR CHANGE
+    let _cmbSector = $("#cmbSector").on("change", function () {
+        let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
+        chartData_.done(function (data) {
+            if (!c){
+                c=createChart("http://localhost:3000/chart", data[$(_cmbSector).val()]);
+            }
+            changeChart(c, data[$(_cmbSector).val()]);
+        });
+        chartData_.fail(error);
+    });
+
+    //CARICAMENTO COMBO COMPANIES
     let defaultCompanies_ = inviaRichiesta("GET", "http://localhost:3000/companies");
-    defaultCompanies_.done( function(data) {
+    defaultCompanies_.done(function (data) {
         for (let i = 0; i < data.length; i++) {
             $("<option>", {
                 text: data[i]["desc"],
                 value: data[i]["id"],
-                appendTo: _cmb
+                appendTo: _cmbCompanies
             });
         }
-        $(_cmb).trigger("change");
+        $(_cmbCompanies).trigger("change");
     });
     defaultCompanies_.fail(error);
 
+    //CARICAMENTO COMBO SETTORE
+    let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
+    sector_.done(function (data) {
+        for (let key in data) {
+            if (key != "Meta Data")
+                $("<option>", {
+                    text: key,
+                    value: key,
+                    appendTo: _cmbSector
+                });
+        }
+        $(_cmbSector).trigger("change");
+    });
+    sector_.fail(error);
+
     //RICERCA INCREMENTALE
-    $("#txtSearch").on("keyup", () =>{
+    $("#txtSearch").on("keyup", () => {
         if ($(this).val().length >= 2) {
             let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
-            search_.done( function(data) {
+            search_.done(function (data) {
                 $(_table).html("");
                 try {
                     for (let i = 0; i < 5; i++) {
                         let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey);
-                        globalQuotes_.done( function(data) {
+                        globalQuotes_.done(function (data) {
                             $(_table).append(createRow(data["Global Quote"]));
                             if ("Note" in data) {
                                 i = 5;
@@ -100,27 +130,35 @@ $(document).ready(function () {
     });
 
     //GRAFICO
-    let dataChart_ = inviaRichiesta("GET", "http://localhost:3000/chart");
-    dataChart_.done( function(data) {
-        let chart = data;
-        let dataToShow_ = inviaRichiesta("GET", "http://localhost:3000/3year");
-        dataToShow_.done(function(data){ 
-            for (let key in data) {
-                let d = chart["data"];
-                d["labels"].push(key);
-                let dataset = d["datasets"][0];
-                dataset["data"].push(data[key].replace("%", ""));
+    function createChart(dataChart, datas) {
+        let dataChart_ = inviaRichiesta("GET", dataChart,{},false);
+        dataChart_.done(function (data) {
+            let chart = data;
+            for (let key in datas) {
+                let dataset = chart["data"]["datasets"][0];
                 let color = "rgba(" + Random(0, 255) + ", " + Random(0, 255) + ", " + Random(0, 255) + ", 1)";
                 dataset["backgroundColor"].push(color);
                 dataset["borderColor"].push(color);
             }
-            new Chart($("#myChart"), chart);
-
+            return chart;
         });
-        dataToShow_.fail(error);
-    });
-    dataChart_.fail(error);
-
+        dataChart_.fail(error);
+        return new Chart($("#myChart"),JSON.parse(dataChart_.responseText));
+    }
+    function changeChart(chart,datas){
+        let dataChart=chart["data"];
+        dataChart["labels"]=[];
+        let dataset=dataChart["datasets"][0];
+        dataset["data"]=[];
+        for (let key in datas) {
+            dataChart["labels"].push(key);
+            dataset["data"].push(datas[key].replace("%", ""));
+            let color = "rgba(" + Random(0, 255) + ", " + Random(0, 255) + ", " + Random(0, 255) + ", 1)";
+            dataset["backgroundColor"].push(color);
+            dataset["borderColor"].push(color);
+        }
+        chart.update();
+    }
 
     //FUNCTIONS
     function createRow(data) {
@@ -134,14 +172,15 @@ $(document).ready(function () {
         return _tr;
     }
 
-    function inviaRichiesta(method, url, parameters = "") {
+    function inviaRichiesta(method, url, parameters = "",async=true) {
         return $.ajax({
             type: method,
             url: url,
             data: parameters,
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             dataType: "json",
-            timeout: 5000
+            timeout: 5000,
+            async:async
         });
     }
 

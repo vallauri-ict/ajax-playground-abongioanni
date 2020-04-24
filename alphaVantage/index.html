@@ -23,8 +23,8 @@
 </head>
 
 <body>
-	<div class="container-fluid">
-		<div class="header-image row"></div><!--heightlighted menu-->
+	<div class="container-fluid ">
+		<div class="header-image row"></div> <!--heightlighted menu-->
 
 		<nav class="responsive-navbar">
 			<h3 class="logo">Alpha Vantage</h3>
@@ -47,59 +47,61 @@
 		</div><!--responsive menu-->
 
 		<div id="Results" class="main"><!--main section-->
-			<section  class="row options section" style="margin-bottom: 10px;">
-				<div class="col-sm-12 intestazione" style="font-size: 4em;">Choose or search?</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4">
-					<div class="text-center simple-text">
-						<span>Select a brand</span>
+			<section class="section">
+				<div  class="row options" style="margin-bottom: 10px;">
+					<div class="col-sm-12 intestazione" style="font-size: 4em;">Choose or search?</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4">
+						<div class="text-center simple-text">
+							<span>Select a brand</span>
+						</div>
+						<div class="input-group ">
+							<select class="form-control" id="cmbSymbols">
+	
+							</select>
+						</div>
 					</div>
-					<div class="input-group ">
-						<select class="form-control" id="cmbSymbols">
-
-						</select>
+					<div class="col-sm-4">
+						<div class="text-center simple-text">
+							<span>Search</span>
+						</div>
+	
+						<div class="input-group" style="margin-bottom: 20px">
+							<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
+						</div>
 					</div>
-				</div>
-				<div class="col-sm-4 search-wrapper">
-					<div class="text-center simple-text">
-						<span>Search</span>
+				</div><!--search or choose-->
+	
+				<div class="row justify-content-center">
+					<div class="col-auto">
+						<table id="tblResults" class="table table-responsive" style="color:#fffff0">
+							<thead class="bg-dark">
+								<tr>
+									<td>Symbol</td>
+									<td>Open</td>
+									<td>High</td>
+									<td>Low</td>
+									<td>Price</td>
+									<td>Volume</td>
+									<td>Latest trading day</td>
+									<td>Previous close</td>
+									<td>Change</td>
+									<td>Change percent</td>
+								</tr>
+							</thead>
+							<tbody id="Chart">
+	
+							</tbody>
+						</table>
 					</div>
+				</div><!--table-->
+			</section>
 
-					<div class="input-group" style="margin-bottom: 20px">
-						<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
-					</div>
-				</div>
-			</section><!--search or choose-->
-
-			<section class="row justify-content-center section">
-				<div class="col-auto">
-					<table id="tblResults" class="table table-responsive" style="color:#fffff0">
-						<thead class="bg-dark">
-							<tr>
-								<td>Symbol</td>
-								<td>Open</td>
-								<td>High</td>
-								<td>Low</td>
-								<td>Price</td>
-								<td>Volume</td>
-								<td>Latest trading day</td>
-								<td>Previous close</td>
-								<td>Change</td>
-								<td>Change percent</td>
-							</tr>
-						</thead>
-						<tbody id="Chart">
-
-						</tbody>
-					</table>
-				</div>
-			</section><!--table-->
-
-			<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 10%;">Chart</div>
 			<section  class="row justify-content-center section">
+				<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 10%;">Chart</div>
 				<div class="col-sm-6">
 					<div class="text-center simple-text">
-						<span>Select a brand</span>
+						<span>Select a timeline</span>
 					</div>
 					<div class="input-group ">
 						<select class="form-control" id="cmbSector">

@@ -11,13 +11,16 @@
 body,html{
     position: relative;
     overflow-x: hidden;
+    background-image: url("resources/Senza titolo.png");
+    background-position: center;
+    background-size: cover;
 }
 .container-fluid{
     margin:0 !important;
     padding:0 !important;
 }
 html,body,.container-fluid{
-    background-color: #1e1d22;
+    /*background-color: #1e1d22;*/
     color:#fffff0;
 }
 ::-webkit-scrollbar {
@@ -27,17 +30,16 @@ html{
     -ms-overflow-style: none;
 }
 .header-image{
-    background-image: url("resources/40840.jpg");
-    height:85%;
+    background-color: transparent;
+    height:83%;
     background-position: center;
     background-size: cover;
 }
 .main{
     padding-top: 100px;
     z-index: -1;
-    background: #2f2e33;
+    height:auto;
 }
-
 /*************************NAVBAR**************************/
 .responsive-menu{
     display: none;
@@ -49,21 +51,22 @@ html{
     z-index:6;
 }
 .responsive-navbar {
-    margin-bottom:2%;
     width: 100%;
-    background: #1e1d22;
+    background: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 30px;
     box-sizing: border-box;
     font-family: 'Poppins';
-    z-index: 1;
+    z-index: 2;
+    transition:background-color 0.2s;
 }
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
+    background-color: #1e1d22;
 }
 .sticky + .main {
     padding-top: 60px;
@@ -85,21 +88,22 @@ html{
 }
 .links li a {
     text-decoration: none;
-    color: #999;
+    color: #bbb;
     letter-spacing: -0.5px;
     transition: all 0.25s;
-}
-.links li a.active {
-	color: #f00;
 }
 .links li a:hover {
     color: #fffff0;
 }
+.sticky .logo{
+    font-size: 3em;
+}
 .logo{
-    font-family: Dense;
+    font-family: 'Dense';
     color:#fffff0;
     margin:0!important;
-    font-size: 3em;
+    font-size: 5em;
+    transition: font-size 0.25s;
 }
 .backdrop {
     display: none;
@@ -208,6 +212,9 @@ table tr td{
     border-top: none !important;
     text-align: center;
 }
+table tbody tr td{
+    background: #2f2e3355;
+}
 table tbody tr{
     transition:all 0.125s;
 }
@@ -226,6 +233,12 @@ footer{
 }
 .options{
     margin:10px 15px;
+}
+#cmbSector{
+    z-index: 1;
+}
+#myChart{
+    margin: 4% auto;
 }
 @media screen and (max-width: 600px) {
     .search-wrapper{

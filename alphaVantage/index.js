@@ -17,7 +17,7 @@ $(document).ready(function () {
     //STICKY NAVBAR
     var sticky = _navbar.offsetTop;
     $(document).on("scroll", () => {
-        if (window.pageYOffset >= sticky) {
+        if (window.pageYOffset > sticky) {
             $(_navbar).addClass("sticky");
         } else {
             $(_navbar).removeClass("sticky");
@@ -38,10 +38,10 @@ $(document).ready(function () {
                     $(_responsiveLinks).parent().removeClass("open")
                 })
             ]
-        });
+        });//AGGIORNAMENTO DEL MENU' RESPONSIVE
     }
 
-    //RESPONSIVE NAVBAR
+    //RESPONSIVE MENU'
     $(_openIcon).on('click', () => {
         $(_responsiveLinks).parent().addClass("open")
         $(_responsiveLinks).animate({ opacity: 1 }, 125);
@@ -53,25 +53,13 @@ $(document).ready(function () {
         $(_responsiveLinks).animate({ opacity: 0 }, 125, () => { $(_responsiveLinks).parent().removeClass("open") });
     });
 
-    //EVENT COMBO COMPANIES CHANGE
+    //EVENT COMBO COMPANIES CHANGE EVENT
     let _cmbCompanies = $("#cmbSymbols").on("change", function () {
         let default_ = inviaRichiesta("GET", "http://localhost:3000/GLOBAL_QUOTE?symbol=" + $(this).val() /*+ "&apikey=" + apiKey*/);
         default_.done(function (data) {
             $(_table).html("").append(createRow(data[0]["Global Quote"]));
         });
         default_.fail(error);
-    });
-
-    //EVENT COMBO SECTOR CHANGE
-    let _cmbSector = $("#cmbSector").on("change", function () {
-        let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
-        chartData_.done(function (data) {
-            if (!c){
-                c=createChart("http://localhost:3000/chart", data[$(_cmbSector).val()]);
-            }
-            changeChart(c, data[$(_cmbSector).val()]);
-        });
-        chartData_.fail(error);
     });
 
     //CARICAMENTO COMBO COMPANIES
@@ -87,6 +75,18 @@ $(document).ready(function () {
         $(_cmbCompanies).trigger("change");
     });
     defaultCompanies_.fail(error);
+
+    //EVENT COMBO SECTOR CHANGE EVENT
+    let _cmbSector = $("#cmbSector").on("change", function () {
+        let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
+        chartData_.done(function (data) {
+            if (!c){//CARICO I DATI DI DEFAULT DEL GRAFICO
+                c=createChart("http://localhost:3000/chart", data[$(_cmbSector).val()]);
+            }
+            changeChart(c, data[$(_cmbSector).val()]);//APPLICO E AGGIORNO I DATI DEL GRAFICO
+        });
+        chartData_.fail(error);
+    });
 
     //CARICAMENTO COMBO SETTORE
     let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
@@ -129,23 +129,18 @@ $(document).ready(function () {
         }
     });
 
-    //GRAFICO
+    /***************************** GRAFICO *****************************/
+
     function createChart(dataChart, datas) {
         let dataChart_ = inviaRichiesta("GET", dataChart,{},false);
         dataChart_.done(function (data) {
-            let chart = data;
-            for (let key in datas) {
-                let dataset = chart["data"]["datasets"][0];
-                let color = "rgba(" + Random(0, 255) + ", " + Random(0, 255) + ", " + Random(0, 255) + ", 1)";
-                dataset["backgroundColor"].push(color);
-                dataset["borderColor"].push(color);
-            }
-            return chart;
+            return data;
         });
         dataChart_.fail(error);
-        return new Chart($("#myChart"),JSON.parse(dataChart_.responseText));
+        return new Chart($("#myChart"),JSON.parse(dataChart_.responseText));//RITORNA IL GRAFICO VUOTO
     }
-    function changeChart(chart,datas){
+
+    function changeChart(chart,datas){//APPLICO I DATI NEL GRAFICO
         let dataChart=chart["data"];
         dataChart["labels"]=[];
         let dataset=dataChart["datasets"][0];
@@ -160,8 +155,9 @@ $(document).ready(function () {
         chart.update();
     }
 
-    //FUNCTIONS
-    function createRow(data) {
+    /***************************** FUNCTIONS *****************************/
+
+    function createRow(data) {  //RITORNA UNA RIGA PER UNA TABELLA
         let _tr = $("<tr>");
         for (let key in data) {
             $("<td>", {
@@ -173,7 +169,7 @@ $(document).ready(function () {
     }
 
     function inviaRichiesta(method, url, parameters = "",async=true) {
-        return $.ajax({
+        return $.ajax({ //PROMISE PER RICHESTA AJAX
             type: method,
             url: url,
             data: parameters,
@@ -184,7 +180,7 @@ $(document).ready(function () {
         });
     }
 
-    function error(jqXHR, text_status, string_error) {
+    function error(jqXHR, text_status, string_error) {  //BANALE ERROR HANDLER
         if (jqXHR.status == 0)
             alert("Connection Refused or Server timeout");
         else if (jqXHR.status == 200)
@@ -193,7 +189,7 @@ $(document).ready(function () {
             alert("Server Error: " + jqXHR.status + " - " + jqXHR.responseText);
     }
 
-    function Random(min, max) {
+    function Random(min, max) {  //INCLUSIVO
         return Math.floor((max - min + 1) * Math.random()) + min;
     }
 

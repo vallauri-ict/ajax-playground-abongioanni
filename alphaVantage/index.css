@@ -4,52 +4,63 @@
     src: url("resources/Dense-Regular.otf");
     font-weight: normal;
 }
+
 * {
-    margin: 0 ;
-    padding: 0 ;
+    margin: 0;
+    padding: 0;
 }
-body,html{
+
+body, html {
     position: relative;
     overflow-x: hidden;
     background-image: url("resources/Senza titolo.png");
     background-position: center;
     background-size: cover;
 }
-.container-fluid{
-    margin:0 !important;
-    padding:0 !important;
+
+.container-fluid {
+    margin: 0 !important;
+    padding: 0 !important;
 }
-html,body,.container-fluid{
+
+html, body, .container-fluid {
     /*background-color: #1e1d22;*/
-    color:#fffff0;
+    color: #fffff0;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }
-html{
+
+html {
     -ms-overflow-style: none;
 }
-.header-image{
+
+.header-image {
     background-color: transparent;
-    height:83%;
+    height: 82vh;
     background-position: center;
     background-size: cover;
 }
-.main{
+
+.main {
     padding-top: 100px;
     z-index: -1;
-    height:auto;
+    height: auto;
 }
+
 /*************************NAVBAR**************************/
-.responsive-menu{
+
+.responsive-menu {
     display: none;
     width: 100%;
-    height:100%;
+    height: 100%;
     position: absolute;
-    top:0;
-    left:0;
-    z-index:6;
+    top: 0;
+    left: 0;
+    z-index: 6;
 }
+
 .responsive-navbar {
     width: 100%;
     background: transparent;
@@ -60,51 +71,110 @@ html{
     box-sizing: border-box;
     font-family: 'Poppins';
     z-index: 2;
-    transition:background-color 0.2s;
+    transition: background-color 0.2s;
 }
+
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #1e1d22;
 }
-.sticky + .main {
+
+.sticky+.main {
     padding-top: 60px;
-  }
-.icon,
-.close-btn {
+}
+
+.icon, .close-btn {
     display: none;
     font-size: 1.2em;
     cursor: pointer;
-    color:#fffff0;
+    color: #fffff0;
 }
+
 .links {
     display: flex;
     list-style: none;
-    margin:0!important;
+    margin: 0!important;
 }
+
 .links li {
     margin-right: 24px;
 }
+
 .links li a {
+    padding: 5px;
+    position: relative;
+    display: block;
     text-decoration: none;
     color: #bbb;
     letter-spacing: -0.5px;
     transition: all 0.25s;
+    text-transform: uppercase;
+    margin: 0 10px;
 }
+
 .links li a:hover {
-    color: #fffff0;
+    color: #fff;
+    z-index: 1;
 }
-.sticky .logo{
+
+/*
+.links li a,
+.links li a:after,
+.links li a:before {
+  transition: all .5s;
+}
+.links li a:after{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: #222;
+  height: 3px;
+}
+.links li a:hover:after {
+    width: 100%;
+    z-index: -10;
+    animation: fill 0.5s forwards;
+    -webkit-animation: fill .5s forwards;
+    -moz-animation: fill .5s forwards;
+    opacity: 1;
+}
+
+
+@keyframes fill {
+    0% {
+      width: 0%;
+      height: 1px;
+    }
+    50% {
+      width: 100%;
+      height: 1px;
+    }
+    100% {
+      width: 100%;
+      height: 100%;
+      background: #33333333;
+    }
+  }*/
+
+.sticky .logo {
     font-size: 3em;
 }
-.logo{
+
+.logo {
     font-family: 'Dense';
-    color:#fffff0;
-    margin:0!important;
+    color: #fffff0;
+    margin: 0!important;
     font-size: 5em;
     transition: font-size 0.25s;
 }
+
 .backdrop {
     display: none;
     animation: 0.4s ease-in-out fadeIn forwards;
@@ -114,10 +184,11 @@ html{
     right: 0;
     left: 0;
     background: rgba(0, 0, 0, 0);
-    transition:all 0.4s;
+    transition: all 0.4s;
     cursor: pointer;
-    height:100%;
+    height: 100%;
 }
+
 @keyframes fadeIn {
     to {
         background: rgba(0, 0, 0, 0.8);
@@ -125,9 +196,9 @@ html{
 }
 
 /* Mobile view */
+
 @media (max-width: 675px) {
-    .icon,
-    .close-btn {
+    .icon, .close-btn {
         display: block;
     }
     .icon {
@@ -141,7 +212,7 @@ html{
         top: 0;
         height: 100%;
         width: 100%;
-        left:0;
+        left: 0;
         background: #fffff0;
         flex-direction: column;
         justify-content: center;
@@ -150,7 +221,7 @@ html{
     }
     .links li {
         margin-right: 0;
-        margin:30px;
+        margin: 30px;
         font-size: 1.5em;
     }
     .close-btn {
@@ -159,34 +230,33 @@ html{
         right: -90vh;
         color: #1e1d22;
         z-index: 3;
-        transition:all 0.3s;
+        transition: all 0.3s;
     }
     .close-btn:hover {
         color: #000;
         cursor: pointer;
     }
-    .open .links li:hover{
+    .open .links li:hover {
         background-color: #eeeeee;
-        margin:0 30px ;
+        margin: 0 30px;
     }
-
     /* Open class */
-    .open .links li:first-of-type{
+    .open .links li:first-of-type {
         margin-top: 50%;
     }
-    .open .links li a{
-        color:#1e1d22
+    .open .links li a {
+        color: #1e1d22
     }
-    .open{
+    .open {
         display: block;
     }
-    .open .links{
+    .open .links {
         z-index: 3;
         display: inline-block;
     }
     .open .close-btn {
         right: 26px;
-        top:29px;
+        top: 29px;
         z-index: 4;
     }
     .open .backdrop {
@@ -194,54 +264,77 @@ html{
         z-index: 2;
     }
 }
+
 /************************************************/
-.intestazione{
+
+.intestazione {
     font-family: Dense;
     text-align: center;
     color: #fffff0;
 }
-.simple-text{
+
+.simple-text {
     margin-bottom: 10px;
     font-family: Dense;
     font-size: 20pt;
 }
-table{
+
+table {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-table tr td{
+
+table tr td {
     border-top: none !important;
     text-align: center;
 }
-table tbody tr td{
+
+table tbody tr td {
     background: #2f2e3355;
 }
-table tbody tr{
-    transition:all 0.125s;
+
+table tbody tr {
+    transition: all 0.125s;
 }
+
 table tbody tr:hover {
     background-color: #444;
 }
-footer{
-    width:100%;
+
+footer {
+    width: 100%;
     text-align: center;
     position: absolute;
-    bottom:10px;
+    bottom: 10px;
     font-size: 5pt;
 }
-.chart-wrapper{
-    margin-bottom:5%
+
+.chart-wrapper {
+    margin-bottom: 5%
 }
-.options{
-    margin:10px 15px;
+
+.options {
+    margin: 10px 15px;
 }
-#cmbSector{
+
+#cmbSector {
     z-index: 1;
 }
-#myChart{
+
+#myChart {
     margin: 4% auto;
 }
+
 @media screen and (max-width: 600px) {
-    .search-wrapper{
+    .search-wrapper {
         border-left: none;
+    }
+    .logo {
+        font-size: 4em;
+    }
+    tr td {
+        display: block;
+    }
+    thead, tbody, tr {
+        display: inline-block;
     }
 }

@@ -104,25 +104,27 @@ $(document).ready(function () {
     sector_.fail(error);
 
     //RICERCA INCREMENTALE
-    $("#txtSearch").on("keyup", () => {
+    $("#txtSearch").on("keyup", function() {
         if ($(this).val().length >= 2) {
             let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
             search_.done(function (data) {
                 $(_table).html("");
                 try {
                     for (let i = 0; i < 5; i++) {
-                        let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey);
+                        let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey,{},false);
                         globalQuotes_.done(function (data) {
-                            $(_table).append(createRow(data["Global Quote"]));
                             if ("Note" in data) {
                                 i = 5;
                                 throw "Limite richieste al server raggiunto\n" + data["Note"];
+                            }
+                            else{
+                                $(_table).append(createRow(data["Global Quote"]));
                             }
                         });
                         globalQuotes_.fail(error);
                     }
                 } catch (ee) {
-                    alert(ee);
+                    //alert(ee);
                 }
             });
             search_.fail(error);

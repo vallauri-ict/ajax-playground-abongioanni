@@ -13,6 +13,7 @@
 body, html {
     position: relative;
     overflow-x: hidden;
+    transition: all 0.5s;;
     background-image: url("resources/Senza titolo.png");
     background-position: center;
     background-size: cover;
@@ -323,6 +324,24 @@ footer {
 #myChart {
     margin: 4% auto;
 }
+.googleIcon{
+    border:none;
+    border-radius: 50%;
+    display:inline-block;
+    background-color:#fff;
+    background-image: url('resources/g.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width:30px;
+    height:30px;
+}
+.googleIcon:hover{
+    cursor:pointer;
+}
+.googleIcon.grey{
+    filter: grayscale(100%);
+}
 
 @media screen and (max-width: 600px) {
     .search-wrapper {
@@ -336,5 +355,8 @@ footer {
     }
     thead, tbody, tr {
         display: inline-block;
+    }
+    .googleIcon{
+        height:5%;
     }
 }

@@ -10,6 +10,7 @@ let scope = "https://www.googleapis.com/auth/drive";
 let clientId = "461420881554-vohtumtl57fgfk63ft022vb2mqa4ufkl.apps.googleusercontent.com";
 
 $(document).ready(function () {
+    $(".loader .logo").fadeOut(0).fadeIn(1000);
     let _table = $("#tblResults tbody");
 
     let _openIcon = $('.icon');
@@ -23,6 +24,22 @@ $(document).ready(function () {
     if (localStorage.getItem("accessToken") === null) {
         $(".googleIcon").addClass("grey");
     }
+
+    //CARICAMENTO COMBO SETTORE
+    let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
+    sector_.done(function (data) {
+        for (let key in data) {
+            if (key != "Meta Data")
+                $("<option>", {
+                    text: key,
+                    value: key,
+                    appendTo: _cmbSector
+                });
+        }
+        $(_cmbSector).trigger("change");
+    });
+    sector_.fail(error);
+
     //STICKY NAVBAR
     var sticky = _navbar.offsetTop;
     $(document).on("scroll", () => {
@@ -81,7 +98,6 @@ $(document).ready(function () {
     $("#downloadChart").on("click", function () {
         let url = c.toBase64Image()
         $(this).prop("href", url);
-        //$("#fileUpload").prop("value",url);
     });
 
     //EVENT COMBO COMPANIES CHANGE EVENT
@@ -118,21 +134,6 @@ $(document).ready(function () {
         });
         chartData_.fail(error);
     });
-
-    //CARICAMENTO COMBO SETTORE
-    let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
-    sector_.done(function (data) {
-        for (let key in data) {
-            if (key != "Meta Data")
-                $("<option>", {
-                    text: key,
-                    value: key,
-                    appendTo: _cmbSector
-                });
-        }
-        $(_cmbSector).trigger("change");
-    });
-    sector_.fail(error);
 
     //RICERCA INCREMENTALE
     $("#txtSearch").on("keyup", function () {
@@ -189,6 +190,28 @@ $(document).ready(function () {
     }
 
     /***************************** FUNCTIONS *****************************/
+    function signIn(clientId, redirect_uri, scope) {
+        let url = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + redirect_uri
+            + "&prompt=consent&response_type=code&client_id=" + clientId + "&scope=" + scope
+            + "&access_type=offline";
+        let r_ = inviaRichiesta("POST", "https://www.googleapis.com/oauth2/v4/token",
+            {
+                code: code
+                , redirect_uri: redirect_uri,
+                client_secret: client_secret,
+                client_id: clientId,
+                scope: scope,
+                grant_type: "authorization_code"
+            }, false);
+        r_.done(function (data) {
+            localStorage.setItem("accessToken", data.access_token);
+            localStorage.setItem("refreshToken", data.refreshToken);
+            localStorage.setItem("expires_in", data.expires_in);
+            window.history.pushState({}, document.title, "index.html");
+        });
+        window.location = url;
+    }
+
     function stripQueryStringAndHashFromPath(url) {
         return url.split("?")[0].split("#")[0];
     }
@@ -245,28 +268,6 @@ $(document).ready(function () {
         });
     };
 
-    function signIn(clientId, redirect_uri, scope) {
-        let url = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + redirect_uri
-            + "&prompt=consent&response_type=code&client_id=" + clientId + "&scope=" + scope
-            + "&access_type=offline";
-        let r_ = inviaRichiesta("POST", "https://www.googleapis.com/oauth2/v4/token",
-            {
-                code: code
-                , redirect_uri: redirect_uri,
-                client_secret: client_secret,
-                client_id: clientId,
-                scope: scope,
-                grant_type: "authorization_code"
-            }, false);
-        r_.done(function (data) {
-            localStorage.setItem("accessToken", data.access_token);
-            localStorage.setItem("refreshToken", data.refreshToken);
-            localStorage.setItem("expires_in", data.expires_in);
-            window.history.pushState({}, document.title, "index.html");
-        });
-        window.location = url;
-    }
-
     function createRow(data) {  //RITORNA UNA RIGA PER UNA TABELLA
         let _tr = $("<tr>");
         for (let key in data) {
@@ -302,5 +303,6 @@ $(document).ready(function () {
     function Random(min, max) {  //INCLUSIVO
         return Math.floor((max - min + 1) * Math.random()) + min;
     }
-
+    setTimeout(function(){$(".loader").slideUp();},1500);
+    
 });

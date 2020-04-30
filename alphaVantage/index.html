@@ -23,8 +23,16 @@
 </head>
 
 <body>
-	
 	<div class="container-fluid ">
+		<div class="loader">
+			<h3 class="logo">Alpha Vantage</h3>
+			<div class="lds-ring">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
 		<div class="header-image row"></div>
 		<!--heightlighted menu-->
 
@@ -36,7 +44,7 @@
 					<li><a href="">Home</a></li>
 					<li><a href="#Results">Results</a></li>
 					<li><a href="#Chart">Chart</a></li>
-					<li><a href="#Upload">Upload</a></li>
+					<li><a href="#Upload">Actions</a></li>
 					<li><a class="googleIcon"></a></li>
 				</ul>
 			</div>
@@ -46,7 +54,7 @@
 		<div class="responsive-menu">
 			<div class="backdrop"></div>
 			<div class="close-btn"><i class="fas fa-times"></i></div>
-			<ul id="menuNavbar" class="links">
+			<ul id="menuNavbar" class="links justify-content-center">
 
 			</ul>
 		</div>
@@ -130,16 +138,20 @@
 						<span>Get Chart's image</span>
 					</div>
 					<div class="input-group row" style="margin: 0;">
-						<a id="downloadChart" class="btn btn-dark col-sm-12" download="ChartImage.png" href="">Download</a>
+						<a id="downloadChart" class="btn btn-dark col-sm-12" download="ChartImage.png"
+							href="">Download</a>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="text-center simple-text">
-						<span>Upload on Drive</span>
+						<span>Select a file</span>
 					</div>
 
 					<div class="input-group" style="margin-bottom: 20px">
-						<input type="file" id="files" class="btn btn-dark col-sm-12">
+						<label for="files" class="btn btn-dark col-sm-12">
+							Select
+						</label>
+						<input id="files" type="file" />
 					</div>
 				</div>
 

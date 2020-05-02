@@ -16,10 +16,6 @@
 		integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="index.js"></script>
-
-	<style>
-
-	</style>
 </head>
 
 <body>
@@ -33,6 +29,7 @@
 				<div></div>
 			</div>
 		</div>
+		
 		<div class="header-image row"></div>
 		<!--heightlighted menu-->
 
@@ -105,7 +102,7 @@
 									<td>Change percent</td>
 								</tr>
 							</thead>
-							<tbody id="Chart">
+							<tbody>
 
 							</tbody>
 						</table>
@@ -114,14 +111,14 @@
 				<!--table-->
 			</section>
 
-			<section class="row justify-content-center section">
+			<section class="row justify-content-center section" id="Chart">
 				<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 10%;">Chart</div>
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					<div class="text-center simple-text">
 						<span>Select a timeline</span>
 					</div>
-					<div class="input-group ">
-						<select class="form-control" id="cmbSector">
+					<div class="input-group">
+						<select class="form-control" style="margin: 0 30px !important;" id="cmbSector">
 
 						</select>
 					</div>
@@ -132,29 +129,38 @@
 			</section>
 			<!--chart-->
 			<section class="row justify-content-center section" style="margin-bottom: 10%;" id="Upload">
-				<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 8%;">Google Drive</div>
-				<div class="col-sm-4">
-					<div class="text-center simple-text">
-						<span>Get Chart's image</span>
-					</div>
-					<div class="input-group row" style="margin: 0;">
-						<a id="downloadChart" class="btn btn-dark col-sm-12" download="ChartImage.png"
-							href="">Download</a>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="text-center simple-text">
-						<span>Select a file</span>
-					</div>
-
-					<div class="input-group" style="margin-bottom: 20px">
-						<label for="files" class="btn btn-dark col-sm-12">
-							Select
-						</label>
-						<input id="files" type="file" />
-					</div>
+				<div class="col-sm-12 intestazione" style="font-size: 4em;margin-top: 8%;"><!--titolo-->
+					<img class="img-responsive" alt="Drive" src="https://icons.iconarchive.com/icons/marcus-roberto/google-play/512/Google-Drive-icon.png" >
+					Google Drive
 				</div>
 
+				<div class="col-sm-12 row justify-content-center">
+					<div class="col-sm-4">
+						<div class="text-center simple-text">
+							<span>Get Chart's image</span>
+						</div>
+						<div class="input-group row" style="margin: 0;">
+							<a id="downloadChart" class="btn btn-dark col-sm-12" download="ChartImage.png"
+								href="">Download</a>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="text-center simple-text">
+							<span>Select a file</span>
+						</div>
+
+						<div class="input-group" style="margin-bottom: 20px">
+							<label for="files" class="btn btn-dark col-sm-12">
+								Select
+							</label>
+							<input id="files" type="file" />
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 row justify-content-center">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4 alert input-group" id="uploadResult"></div>
+				</div>
 			</section>
 		</div>
 

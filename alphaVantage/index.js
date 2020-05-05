@@ -30,7 +30,7 @@ const code = urlParams.get('code');
 $(document).ready(function () {
     $(".loader .logo").fadeOut(0).fadeIn(1000);
     let _table = $("#tblResults tbody");
-
+    let _tips = $(".search-results").eq(0).slideUp(0);
     let _openIcon = $('.icon');
     let _linksList = $('.links-wrapper ul li');
     let _backdrop = $('.backdrop');
@@ -40,7 +40,7 @@ $(document).ready(function () {
 
     let c;//chart is empty
     if (localStorage.getItem("accessToken") === null) {
-        $(".googleIcon").addClass("grey").prop("title","Non sei registrato");
+        $(".googleIcon").addClass("grey").prop("title", "Non sei registrato");
     }
 
     //CARICAMENTO COMBO SETTORE
@@ -85,7 +85,7 @@ $(document).ready(function () {
             ]
         });//AGGIORNAMENTO DEL MENU' RESPONSIVE
         if (!$(_a).prop("class").includes("googleIcon")) {
-            _newa.prop("href",_a.prop("href"));
+            _newa.prop("href", _a.prop("href"));
         }
     }
 
@@ -101,7 +101,7 @@ $(document).ready(function () {
         $(_responsiveLinks).animate({ opacity: 0 }, 125, () => { $(_responsiveLinks).parent().removeClass("open") });
     });
 
-    $(".googleIcon").on("click", function () {
+    $(".googleIcon").on("click", function () {//LOG IO OR UPLOAD ON DRIVE
         if ($("#files").val() == "") {
             $("#uploadResult")
                 .removeClass("alert-danger").removeClass("alert-success")
@@ -134,12 +134,12 @@ $(document).ready(function () {
         }
     });
 
-    $("#downloadChart").on("click", function () {
+    $("#downloadChart").on("click", function () {//DOWNLOAD CHART IMAGE
         let url = c.toBase64Image()
         $(this).prop("href", url);
     });
 
-    $("#files").on("change", function () {
+    $("#files").on("change", function () {//SELECT A FILE
         var fullPath = $(this).val();
         if (fullPath) {
             var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
@@ -191,27 +191,37 @@ $(document).ready(function () {
         if ($(this).val().length >= 2) {
             let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
             search_.done(function (data) {
-                $(_table).html("");
-                try {
-                    for (let i = 0; i < 5; i++) {
-                        let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + data["bestMatches"][i]["1. symbol"] + "&apikey=" + apiKey, {}, false);
-                        globalQuotes_.done(function (data) {
-                            if ("Note" in data) {
-                                i = 5;
-                                throw "Limite richieste al server raggiunto\n" + data["Note"];
-                            }
-                            else {
-                                $(_table).append(createRow(data["Global Quote"]));
-                            }
-                        });
-                        globalQuotes_.fail(error);
-                    }
-                } catch (ee) {
-                    //alert(ee);
+                $(_tips).html("");
+                let r=data["bestMatches"];
+                for (let i = 0; i < r.length; i++) {
+                    let symbol=r[i]["1. symbol"];
+                    $("<li>", {
+                        name: symbol,
+                        text: r[i]["2. name"],
+                        appendTo: _tips,
+                        click: function () {
+                            let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + apiKey, {}, false);
+                            globalQuotes_.done(function (data) {
+                                if ("Note" in data) {
+                                    throw "Limite richieste al server raggiunto\n" + data["Note"];
+                                }
+                                else {
+                                    $(_table).html("").append(createRow(data["Global Quote"]));
+                                }
+                            });
+                            globalQuotes_.fail(error);
+                        }
+                    })
                 }
+                $(_tips).slideDown(200)
             });
             search_.fail(error);
         }
+    }).on("click",function(){
+        if($(_tips).html()!="")
+            $(_tips).slideDown(200)
+    }).on("focusout", function () {
+        $(_tips).slideUp(200)
     });
 
     /***************************** GRAFICO *****************************/

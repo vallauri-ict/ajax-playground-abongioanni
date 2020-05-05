@@ -9,7 +9,6 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" type="text/css"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 	<link rel="stylesheet" type="text/css" href="index.css">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
@@ -20,7 +19,7 @@
 
 <body>
 	<div class="container-fluid ">
-		<div class="loader">
+		<!--<div class="loader">
 			<h3 class="logo">Alpha Vantage</h3>
 			<div class="lds-ring">
 				<div></div>
@@ -29,7 +28,7 @@
 				<div></div>
 			</div>
 		</div>
-		
+	-->
 		<div class="header-image row"></div>
 		<!--heightlighted menu-->
 
@@ -78,8 +77,11 @@
 							<span>Search</span>
 						</div>
 
-						<div class="input-group" style="margin-bottom: 20px">
+						<div class="input-group search-wrapper" style="margin-bottom: 20px">
 							<input type="text" class="form-control" placeholder="Search..." id="txtSearch">
+							<ul class="search-results">
+
+							</ul>
 						</div>
 					</div>
 				</div>

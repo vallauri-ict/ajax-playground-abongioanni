@@ -324,7 +324,7 @@ $(document).ready(function () {
       localStorage.setItem("expires_in", data.expires_in);
       window.history.pushState({}, document.title, "index.html");
     });
-    setTimeout(window.location = url,1500);
+    setTimeout(window.location = url, 1500);
 
   }
 

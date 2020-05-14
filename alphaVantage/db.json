@@ -231,40 +231,5 @@
             "Communication Services": "44.71%",
             "Energy": "-45.46%"
         }
-    },
-    "chart": {
-        "type": "bar",
-        "data": {
-            "labels": [],
-            "datasets": [
-                {
-                    "data": [],
-                    "backgroundColor": [],
-                    "borderColor": [],
-                    "borderWidth": 1
-                }
-            ]
-        },
-        "options": {
-            "scales": {
-                "yAxes": [
-                    {
-                        "ticks": {
-                            "beginAtZero": true
-                        }
-                    }
-                ],
-                "xAxes": [{
-                    "ticks": {
-                        "autoSkip": false,
-                        "maxRotation": 90,
-                        "minRotation": 90
-                    }
-                }]
-            },
-            "legend": {
-                "display": false
-            }
-        }
     }
 }

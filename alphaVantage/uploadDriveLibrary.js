@@ -1,5 +1,5 @@
 function isEnter(){
-    return localStorage.getItem("accessToken")!=null
+    return localStorage.getItem("accessToken")!=null;
 }
 
 function signIn(clientId, clientSecret, redirectUri, scope,code) {

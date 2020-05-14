@@ -9,7 +9,16 @@
     margin: 0;
     padding: 0;
 }
-
+#littleLoader{
+    display: inline-block;
+    background-image: url("resources/loader.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width:20px;
+    height:20px;
+    margin-left: 10px;
+}
 body, html {
     position: relative;
     overflow-x: hidden;

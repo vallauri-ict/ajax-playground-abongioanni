@@ -2,13 +2,6 @@
 
 const apiKey = "UJGWAY47OK4QKSZ0";
 
-const clientSecret = credentials["web"]["client_secret"];
-let redirectUri = credentials["web"]["redirect_uris"][0];
-let scope = "https://www.googleapis.com/auth/drive";
-let clientId = credentials["web"]["client_id"];
-const urlParams = new URLSearchParams(window.location.search);
-const code = urlParams.get("code");
-
 $(document).ready(function () {
     $(".loader .logo").fadeOut(0).fadeIn(1000);
     let _table = $("#tblResults tbody");
@@ -19,18 +12,42 @@ $(document).ready(function () {
     let _closeIcon = $(".close-btn");
     let _responsiveLinks = $("#menuNavbar");
     let _navbar = document.getElementsByClassName("responsive-navbar")[0];
-
+	let _cmbSector=$("#cmbSector")
     let c; //chart is empty
 
+    //LINKS UPDATE
+    $(_responsiveLinks).children().remove();
+    for (let i = 0; i < _linksList.length; i++) {
+        let _a = $(_linksList).eq(i).find("a");
+		let _newa;
+		let c=$(_a).attr("class");
+        $("<li>", {
+            appendTo: _responsiveLinks,
+            append: [
+                (_newa = $("<a>", {
+                    text: $(_a).text(),
+					addClass: c,
+                }).on("click", () => {
+                    $(_responsiveLinks).parent().removeClass("open");
+                })),
+            ],
+        }); //AGGIORNAMENTO DEL MENU' RESPONSIVE
+        if (!$(_a).prop("class").includes("googleIcon") && !$(_a).prop("class").includes("fas")) {
+            _newa.prop("href", _a.prop("href"));
+        }
+    }
+
     if (!isEnter()) {
+		$(".logOut").hide();
         $(".googleIcon").addClass("grey").prop("title", "Non sei registrato");
     }
     else{
-        $(".logOut").eq(0).css({opacity:1}).on("click",function(){
+        $(".logOut").show().on("click",function(){
             signOut();
         })
     }
     $("#littleLoader").hide();
+
     //CARICAMENTO COMBO SETTORE
     let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
     sector_.done(function (data) {
@@ -56,27 +73,6 @@ $(document).ready(function () {
         }
     });
 
-    //LINKS UPDATE
-    $(_responsiveLinks).children().remove();
-    for (let i = 0; i < _linksList.length; i++) {
-        let _a = $(_linksList).eq(i).find("a");
-        let _newa;
-        $("<li>", {
-            appendTo: _responsiveLinks,
-            append: [
-                (_newa = $("<a>", {
-                    text: $(_a).text(),
-                    addClass: $(_a).attr("class"),
-                }).on("click", () => {
-                    $(_responsiveLinks).parent().removeClass("open");
-                })),
-            ],
-        }); //AGGIORNAMENTO DEL MENU' RESPONSIVE
-        if (!$(_a).prop("class").includes("googleIcon")) {
-            _newa.prop("href", _a.prop("href"));
-        }
-    }
-
     //RESPONSIVE MENU'
     $(_openIcon).on("click", () => {
         $(_responsiveLinks).parent().addClass("open");
@@ -96,7 +92,7 @@ $(document).ready(function () {
     $(".googleIcon").on("click", function () {
         //LOG IO OR UPLOAD ON DRIVE
         if (!isEnter()) {
-            signIn(clientId, clientSecret, redirectUri, scope, code);
+            signIn();
         } else {
             if ($("#files").val() == "") {
                 $("#uploadResult")
@@ -180,7 +176,7 @@ $(document).ready(function () {
     defaultCompanies_.fail(error);
 
     //EVENT COMBO SECTOR CHANGE EVENT
-    let _cmbSector = $("#cmbSector").on("change", function () {
+    $(_cmbSector).on("change", function () {
         let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
         chartData_.done(function (data) {
             if (!c) {

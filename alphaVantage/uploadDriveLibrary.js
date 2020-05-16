@@ -30,8 +30,17 @@ function signIn(clientId, clientSecret, redirectUri, scope,code) {
         localStorage.setItem("expires_in", data.expires_in);
         window.history.pushState({}, document.title, "index.html");
     });
-    setTimeout(window.location = url, 1500);
+    setTimeout(window.location = url, 5000);
 
+}
+
+function signOut(){
+    if(isEnter()){
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("expires_in");
+        window.location="index.html";
+    }
 }
 
 function inviaRichiesta(method, url, parameters = "", async = true) {

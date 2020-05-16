@@ -25,6 +25,11 @@ $(document).ready(function () {
     if (!isEnter()) {
         $(".googleIcon").addClass("grey").prop("title", "Non sei registrato");
     }
+    else{
+        $(".logOut").eq(0).css({opacity:1}).on("click",function(){
+            signOut();
+        })
+    }
     $("#littleLoader").hide();
     //CARICAMENTO COMBO SETTORE
     let sector_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");

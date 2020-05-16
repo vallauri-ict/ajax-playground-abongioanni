@@ -110,6 +110,7 @@ html {
 
 .links li {
     margin-right: 3vw;
+    position: relative;
 }
 
 .links li a {
@@ -323,6 +324,13 @@ footer {
 
 .googleIcon.grey {
     filter: grayscale(100%);
+}
+
+.logOut{
+    line-height: normal;
+    bottom:0;
+    position: absolute;
+    opacity: 0;
 }
 
 input[type="file"] {

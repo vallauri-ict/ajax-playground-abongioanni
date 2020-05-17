@@ -7,56 +7,52 @@ let scope = "https://www.googleapis.com/auth/drive";
 let urlParams;
 let code;
 
-readTextFile("credentials.json", function (text) {
-    credentials = JSON.parse(text);
+readTextFile("credentials.json", function (credentials) {
     clientSecret = credentials["web"]["client_secret"];
     redirectUri = credentials["web"]["redirect_uris"][0];
     clientId = credentials["web"]["client_id"];
-
-    if (localStorage.getItem("signin") == "i") {
-        localStorage.removeItem("signin");
-        urlParams = new URLSearchParams(window.location.search);
-        code = urlParams.get("code");
-        let r_ = $.ajax({
-            //PROMISE PER RICHESTA AJAX
-            type: "POST",
-            url: "https://www.googleapis.com/oauth2/v4/token",
-            data: {
-                code: code,
-                redirect_uri: redirectUri,
-                client_secret: clientSecret,
-                client_id: clientId,
-                scope: scope,
-                grant_type: "authorization_code",
-            },
-            contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            dataType: "json",
-            timeout: 5000,
-            async: async,
-        });
-        r_.done(function (data) {
-            localStorage.setItem("accessToken", data.access_token);
-            localStorage.setItem("refreshToken", data.refreshToken);
-            localStorage.setItem("expires_in", data.expires_in);
-            window.history.pushState({}, document.title, "index.html");
-        });
-    }
 });
 
+function setTokens(){
+    urlParams = new URLSearchParams(window.location.search);
+    code = urlParams.get("code");
+    let r_ = $.ajax({
+        //PROMISE PER RICHESTA AJAX
+        type: "POST",
+        url: "https://www.googleapis.com/oauth2/v4/token",
+        data: {
+            code: code,
+            redirect_uri: redirectUri,
+            client_secret: clientSecret,
+            client_id: clientId,
+            scope: scope,
+            grant_type: "authorization_code",
+        },
+        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+        dataType: "json",
+        timeout: 5000,
+    });
+    r_.done(function (data) {
+        localStorage.setItem("accessToken", data.access_token);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("expires_in", data.expires_in);
+        localStorage.removeItem("signin");
+        window.history.pushState({}, document.title, "index.html");
+    });
+}
+
 function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
-        }
-    }
-    rawFile.send(null);
+    return $.ajax({
+        type:"GET",
+        url:file,
+        success:callback,
+        dataType:"json",
+        timeout:6000
+    })
 }
 
 function isEnter() {
-    return localStorage.getItem("accessToken") != null;
+    return localStorage.getItem("accessToken") != null || localStorage.getItem("signin") !=null;
 }
 
 function signIn() {
@@ -68,7 +64,7 @@ function signIn() {
         "&scope=" +
         scope +
         "&access_type=offline";
-    localStorage.setItem("signin", "i");
+    localStorage.setItem("signin", "foo");
     window.location = url;
 }
 

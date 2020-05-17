@@ -15,6 +15,11 @@ $(document).ready(function () {
 	let _cmbSector=$("#cmbSector")
     let c; //chart is empty
 
+
+    if (localStorage.getItem("signin") !=null) {
+        setTokens();
+    }
+
     //LINKS UPDATE
     $(_responsiveLinks).children().remove();
     for (let i = 0; i < _linksList.length; i++) {

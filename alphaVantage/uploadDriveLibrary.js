@@ -95,7 +95,7 @@ class Upload {
     doUpload() {
         var formData = new FormData();
         // add assoc key values, this will be posts values
-        formData.append("file", this.file, this.getName());
+        formData.append("file", this.file, this.file.name);
         formData.append("upload_file", true);
         return $.ajax({
             type: "POST",

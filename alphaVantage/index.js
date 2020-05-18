@@ -16,9 +16,7 @@ $(document).ready(function () {
     let c; //chart is empty
 
 
-    if (localStorage.getItem("signin") !=null) {
-        setTokens();
-    }
+    setTokens();
 
     //LINKS UPDATE
     $(_responsiveLinks).children().remove();

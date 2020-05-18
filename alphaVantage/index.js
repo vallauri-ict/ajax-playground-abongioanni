@@ -12,9 +12,8 @@ $(document).ready(function () {
     let _closeIcon = $(".close-btn");
     let _responsiveLinks = $("#menuNavbar");
     let _navbar = document.getElementsByClassName("responsive-navbar")[0];
-	let _cmbSector=$("#cmbSector")
+    let _cmbSector = $("#cmbSector")
     let c; //chart is empty
-
 
     setTokens();
 
@@ -22,14 +21,14 @@ $(document).ready(function () {
     $(_responsiveLinks).children().remove();
     for (let i = 0; i < _linksList.length; i++) {
         let _a = $(_linksList).eq(i).find("a");
-		let _newa;
-		let c=$(_a).attr("class");
+        let _newa;
+        let c = $(_a).attr("class");
         $("<li>", {
             appendTo: _responsiveLinks,
             append: [
                 (_newa = $("<a>", {
                     text: $(_a).text(),
-					addClass: c,
+                    addClass: c,
                 }).on("click", () => {
                     $(_responsiveLinks).parent().removeClass("open");
                 })),
@@ -41,11 +40,11 @@ $(document).ready(function () {
     }
 
     if (!isEnter()) {
-		$(".logOut").hide();
+        $(".logOut").hide();
         $(".googleIcon").addClass("grey").prop("title", "Non sei registrato");
     }
-    else{
-        $(".logOut").show().on("click",function(){
+    else {
+        $(".logOut").show().on("click", function () {
             signOut();
         })
     }
@@ -180,11 +179,11 @@ $(document).ready(function () {
 
     //EVENT COMBO SECTOR CHANGE EVENT
     $(_cmbSector).on("change", function () {
-        let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");
+        let chartData_ = inviaRichiesta("GET", "http://localhost:3000/SECTOR");//https://www.alphavantage.co/query?function=SECTOR
         chartData_.done(function (data) {
             if (!c) {
                 //CARICO I DATI DI DEFAULT DEL GRAFICO
-                c = createChart("#myChart");
+                c = createChart("myChart");
             }
             changeChart(c, data[$(_cmbSector).val()]); //APPLICO E AGGIORNO I DATI DEL GRAFICO
         });
@@ -196,13 +195,13 @@ $(document).ready(function () {
         if ($(this).val().length >= 2) {
             let search_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val() + "&apikey=" + apiKey);
             search_.done(function (data) {
-                $(_tips).html("").on("click","li.tip", function () {
+                $(_tips).html("").on("click", "li.tip", function () {
                     $("#littleLoader").show();
                     let globalQuotes_ = inviaRichiesta("GET", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + this.id + "&apikey=" + apiKey);
                     globalQuotes_.done(function (data) {
                         if ("Note" in data) {
                             $("#littleLoader").hide();
-                            alert ("Limite richieste al server raggiunto\n" + data["Note"]);
+                            alert("Limite richieste al server raggiunto\n" + data["Note"]);
                         } else {
                             $(_table).html("").append(createRow(data["Global Quote"]));
                         }
@@ -218,7 +217,7 @@ $(document).ready(function () {
                         id: symbol,
                         text: r[i]["2. name"],
                         appendTo: _tips,
-                        addClass:"tip"
+                        addClass: "tip"
                     })
                 }
                 $(_tips).slideDown(200);

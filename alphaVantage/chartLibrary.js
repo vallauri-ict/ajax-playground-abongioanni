@@ -34,21 +34,9 @@ let chartGraphicalDatas = {
     }
 }
 
-function inviaRichiesta(method, url, parameters = "", async = true) {
-    return $.ajax({
-        //PROMISE PER RICHESTA AJAX
-        type: method,
-        url: url,
-        data: parameters,
-        contentType: "application/x-www-form-urlencoded;charset=utf-8",
-        dataType: "json",
-        timeout: 5000,
-        async: async,
-    });
-}
-
-function createChart(idName) {
-    return new Chart($(idName), chartGraphicalDatas); //RITORNA IL GRAFICO VUOTO
+function createChart(idName,type="bar") {
+    chartGraphicalDatas["type"]=type;
+    return new Chart(document.getElementById(idName), chartGraphicalDatas); //RITORNA IL GRAFICO VUOTO
 }
 
 function Random(min, max) {

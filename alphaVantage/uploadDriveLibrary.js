@@ -14,7 +14,7 @@ readTextFile("credentials.json", function (credentials) {
 });
 
 function setTokens() {
-    if (code) {
+    if (isEnter()) {
         let r_ = $.ajax({
             //PROMISE PER RICHESTA AJAX
             type: "POST",
@@ -51,7 +51,7 @@ function readTextFile(file, callback) {
 }
 
 function isEnter() {
-    return localStorage.getItem("accessToken") != null || code 
+    return localStorage.getItem("accessToken") || code 
 }
 
 function signIn() {
@@ -95,6 +95,7 @@ class Upload {
         // add assoc key values, this will be posts values
         formData.append("file", this.file, this.getName());
         formData.append("upload_file", true);
+        
         return $.ajax({
             type: "POST",
             beforeSend: function (request) {
